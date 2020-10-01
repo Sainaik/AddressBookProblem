@@ -1,0 +1,12 @@
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\bin\Debug\netcoreapp3.1\AddressBookProblem.exe
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\bin\Debug\netcoreapp3.1\AddressBookProblem.deps.json
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\bin\Debug\netcoreapp3.1\AddressBookProblem.runtimeconfig.json
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\bin\Debug\netcoreapp3.1\AddressBookProblem.runtimeconfig.dev.json
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\bin\Debug\netcoreapp3.1\AddressBookProblem.dll
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\bin\Debug\netcoreapp3.1\AddressBookProblem.pdb
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.AssemblyInfoInputs.cache
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.AssemblyInfo.cs
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.csproj.CoreCompileInputs.cache
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.dll
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.pdb
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.genruntimeconfig.cache
