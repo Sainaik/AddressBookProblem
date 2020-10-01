@@ -59,9 +59,9 @@ namespace AddressBookProblem
 
                         bool isDeleted = ad.DeleteContact(fName, lName);
 
-                        if (isEdited)
+                        if (isDeleted)
                         {
-                            Console.WriteLine("\nDetails Updated SuccessFully!!\n");
+                            Console.WriteLine("\nContact SuccessFully!!\n");
                         }
                         else
                         {
