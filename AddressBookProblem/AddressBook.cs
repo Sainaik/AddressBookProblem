@@ -100,11 +100,35 @@ namespace AddressBookProblem
                     con.Email = details[7];
 
                     isEdited = true;
+                    break;
                 }
 
             }
 
             return isEdited;
         }
+
+
+
+        public bool DeleteContact(string fname, string lname)
+        {
+            bool isDeleted = false;
+
+            foreach (Contact con in this.contactsList)
+            {
+                if (con.FirstName.Equals(fname) && con.LastName.Equals(lname))
+                {
+
+                    this.contactsList.Remove(con);
+        
+                    isDeleted = true;
+                    break;
+                }
+
+            }
+
+            return isDeleted;
+        }
+
     }
 }
