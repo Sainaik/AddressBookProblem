@@ -6,21 +6,29 @@ namespace AddressBookProblem
 {
     class Contact
     {
-        String firstName, lastName, address, city, state, email;
-        String zip, phoneNumber;
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+
+        public string Email { get; set; }
+        public string Zip { get; set; }
+        public string PhoneNumber { get; set; }
+
         public Contact(String firstName, String lastName, String address, String city, String state, string zip, string phoneNumber, String email)
         {
 
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.address = address;
-            this.city = city;
-            this.state = state;
-            this.zip = zip;
-            this.phoneNumber = phoneNumber;
-            this.email = email;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Address = address;
+            this.City = city;
+            this.State = state;
+            this.Zip = zip;
+            this.PhoneNumber = phoneNumber;
+            this.Email = email;
 
-            Console.WriteLine("Hola!! New Contact is created");
+            Console.WriteLine("Hola! New Contact is created\n ");
         }
     }
 }
