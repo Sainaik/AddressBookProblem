@@ -7,57 +7,51 @@ namespace AddressBookProblem
     {
         static void Main(string[] args)
         {
-            String firstName, lastName, address, city, state, email;
-            String zip, phoneNumber;
+            Console.WriteLine("Welcome to Address Book Problem\nChoose one of the option");
 
-            Console.WriteLine("Enter the details of Contact\n"); 
+            //variables
 
-            Console.WriteLine("Enter First Name: ");
-            firstName = Console.ReadLine();
-
-            Console.WriteLine("Enter Last Name: ");
-            lastName = Console.ReadLine();
-
-            Console.WriteLine("Enter Address: ");
-            address = Console.ReadLine();
-
-            Console.WriteLine("Enter city: ");
-            city = Console.ReadLine();
-
-            Console.WriteLine("Enter state: ");
-            state = Console.ReadLine();
-
-            Console.WriteLine("Enter zip: ");
-            zip = Console.ReadLine();
+           
+            AddressBook ad = new AddressBook();
 
 
+            bool b = true;
 
-            string pattern = @"[0-9]{10}";
-            Regex r = new Regex(pattern);
-
-            Console.WriteLine("Enter phone number: ");
-            phoneNumber = Console.ReadLine();
-
-            if (!r.IsMatch(phoneNumber))
+            while (b)
             {
-                Console.WriteLine("Enter a valid phone number ");
-                System.Environment.Exit(1);
+                Console.WriteLine("\n1.Add contacts\n2.Edit Contact using name\n3.Exit");
+
+                int choice = Convert.ToInt32(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine("\nAdding a new Contact\n");
+                        ad.AddContact();
+                        break;
+                    case 2:
+                        Console.WriteLine("Enter First Name: ");
+                        String fname = Console.ReadLine();
+
+                        Console.WriteLine("Enter First Name: ");
+                        String lname = Console.ReadLine();
+
+                        bool isEdited = ad.EditContact(fname, lname);
+
+                        if (isEdited)
+                        {
+                            Console.WriteLine("\nDetails Updated SuccessFully!!\n");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nNo contact exits with this name\n");
+                        }
+                        break;
+                    default:
+                        b = false;
+                        break;
+                }
             }
-
-            pattern = @"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
-;
-            Regex r2 = new Regex(pattern);
-
-            Console.WriteLine("Enter email: ");
-            email = Console.ReadLine();
-
-            if (!r2.IsMatch(email))
-            {
-                Console.WriteLine("Enter a valid email");
-                System.Environment.Exit(1);
-            }
-
-            AddressBook ab = new AddressBook(firstName, lastName, address, city, state, zip, phoneNumber, email);
         }
     }
 }
