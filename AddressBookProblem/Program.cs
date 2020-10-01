@@ -7,12 +7,10 @@ namespace AddressBookProblem
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Address Book Problem\n Enter the details of the contact");
-
-            //variables
-
             String firstName, lastName, address, city, state, email;
             String zip, phoneNumber;
+
+            Console.WriteLine("Enter the details of Contact\n"); 
 
             Console.WriteLine("Enter First Name: ");
             firstName = Console.ReadLine();
@@ -59,7 +57,7 @@ namespace AddressBookProblem
                 System.Environment.Exit(1);
             }
 
-            Contact contact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
+            AddressBook ab = new AddressBook(firstName, lastName, address, city, state, zip, phoneNumber, email);
         }
     }
 }
