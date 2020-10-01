@@ -7,8 +7,14 @@ namespace AddressBookProblem
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Address Book Problem\nChoose one of the option");
 
+            Console.WriteLine("Welcome to Address Book Problem\nChoose one of the option");
+            //Constants:
+
+            const int ADD_ADDRESSBOOK = 1;
+            const int ADD_CONTACT = 1;
+            const int EDIT_CONTACT = 2;
+            const int DELETE_CONTACT = 3;
             //variables
             bool b1 = true;
             while (b1)
@@ -18,7 +24,7 @@ namespace AddressBookProblem
 
                 switch (choose1)
                 {
-                    case 1:
+                    case ADD_ADDRESSBOOK:
 
                         AddressBook ad = new AddressBook();
                         bool b = true;
@@ -31,16 +37,16 @@ namespace AddressBookProblem
 
                             switch (choice)
                             {
-                                case 1:
+                                case ADD_CONTACT:
                                     Console.WriteLine("\nAdding a new Contact\n");
                                     ad.AddContact();
                                     break;
-                                case 2:
+                                case EDIT_CONTACT:
                                     Console.WriteLine("Edit Contact Using name\n");
                                     Console.WriteLine("Enter First Name: ");
                                     String fname = Console.ReadLine();
 
-                                    Console.WriteLine("Enter First Name: ");
+                                    Console.WriteLine("Enter last Name: ");
                                     String lname = Console.ReadLine();
 
                                     bool isEdited = ad.EditContact(fname, lname);
@@ -51,16 +57,16 @@ namespace AddressBookProblem
                                     }
                                     else
                                     {
-                                        Console.WriteLine("\nNo contact exits with this name\n");
+                                        Console.WriteLine("\nNo contact exits with this name\nEdite failed!!\n");
                                     }
                                     break;
 
-                                case 3:
+                                case DELETE_CONTACT:
                                     Console.WriteLine("Delete Contact Using name\n");
                                     Console.WriteLine("Enter First Name: ");
                                     String fName = Console.ReadLine();
 
-                                    Console.WriteLine("Enter First Name: ");
+                                    Console.WriteLine("Enter last Name: ");
                                     String lName = Console.ReadLine();
 
                                     bool isDeleted = ad.DeleteContact(fName, lName);
@@ -71,7 +77,7 @@ namespace AddressBookProblem
                                     }
                                     else
                                     {
-                                        Console.WriteLine("\nNo contact exits with this name\n");
+                                        Console.WriteLine("\nNo contact exits with this name\nDelete failed!!\n");
                                     }
                                     break;
                                 default:
@@ -88,6 +94,9 @@ namespace AddressBookProblem
                         break;
 
                 }
+
+                Console.Out.WriteLine("*******************************************\n");
+
             }
 
 
