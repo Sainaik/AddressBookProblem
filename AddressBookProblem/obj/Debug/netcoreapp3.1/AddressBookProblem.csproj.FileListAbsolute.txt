@@ -10,3 +10,4 @@ C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netc
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.dll
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.pdb
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.genruntimeconfig.cache
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.csprojAssemblyReference.cache
