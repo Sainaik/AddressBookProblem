@@ -37,29 +37,47 @@ namespace AddressBookProblem
             Console.WriteLine("Enter zip: ");
             details.Add(Console.ReadLine());
 
-            string pattern = @"[0-9]{10}";
-            Regex r = new Regex(pattern);
-
-            Console.WriteLine("Enter phone number: ");
-            details.Add(Console.ReadLine());
-
-            if (!r.IsMatch(details[6]))
+            bool des = true;
+            while (des)
             {
-                Console.WriteLine("Enter a valid phone number ");
-                System.Environment.Exit(1);
+                string pattern = @"[0-9]{10}";
+                Regex r = new Regex(pattern);
+                Console.WriteLine("Enter phone number: ");
+                String phno = Console.ReadLine();
+
+                if (!r.IsMatch(phno))
+                {
+                    Console.WriteLine("Enter a valid phone number ");
+                    des = true;
+                }
+                else
+                {
+                    details.Add(phno);
+                    des = false;
+                }
             }
 
-            pattern = @"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
-;
-            Regex r2 = new Regex(pattern);
-
-            Console.WriteLine("Enter email: ");
-            details.Add(Console.ReadLine());
-
-            if (!r2.IsMatch(details[7]))
+            bool des2 = true;
+            while (des2)
             {
-                Console.WriteLine("Enter a valid email");
-                System.Environment.Exit(1);
+
+                string pattern = @"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+;
+                Regex r2 = new Regex(pattern);
+
+                Console.WriteLine("Enter email: ");
+                String email = Console.ReadLine();
+
+                if (!r2.IsMatch(email))
+                {
+                    Console.WriteLine("Enter a valid email");
+
+                }
+                else
+                {
+                    details.Add(email);
+                    des2 = false;
+                }
             }
 
             return details;
@@ -84,20 +102,91 @@ namespace AddressBookProblem
         {
             bool isEdited = false;
 
+            
             foreach (Contact con in this.contactsList)
             {
+
                 if (con.FirstName.Equals(fname) && con.LastName.Equals(lname))
                 {
-                    List<String> details = GetDetails();
+                    Console.WriteLine("The contact with give name exists, continue to add edit detais....\n");
 
-                    con.FirstName = details[0];
-                    con.LastName = details[1];
-                    con.Address = details[2];
-                    con.City = details[3];
-                    con.State = details[4];
-                    con.Zip = details[5];
-                    con.PhoneNumber = details[6];
-                    con.Email = details[7];
+                    Console.WriteLine("Choose the detail you want to edit:-\n1.First Name\n2.Last Name 3.Address\n4.City\n5.State\n6.PhoneNumber\n7.Email\n8.zip\n ");
+                    int choice = Convert.ToInt32(Console.ReadLine());
+
+                    switch (choice)
+                    {
+                        case 1:
+                            Console.WriteLine("Enter First Name: ");
+                            con.FirstName = Console.ReadLine();
+                            break;
+                        case 2:
+                            Console.WriteLine("Enter Last Name: ");
+                            con.LastName = Console.ReadLine();
+                            break;
+                        case 3:
+                            Console.WriteLine("Enter Address: ");
+                            con.Address = Console.ReadLine();
+                            break;
+                        case 4:
+                            Console.WriteLine("Enter city: ");
+                            con.City = Console.ReadLine();
+                            break;
+                        case 5:
+                            Console.WriteLine("Enter Address: ");
+                            con.State = Console.ReadLine();
+                            break;
+                        
+                        case 6:
+                            bool des = true;
+                            while (des)
+                            {
+                                string pattern = @"[0-9]{10}";
+                                Regex r = new Regex(pattern);
+                                Console.WriteLine("Enter phone number: ");
+                                String phno = Console.ReadLine();
+
+                                if (!r.IsMatch(phno))
+                                {
+                                    Console.WriteLine("Enter a valid phone number ");
+                                    des = true;
+                                }
+                                else
+                                {
+                                    con.PhoneNumber = phno;
+                                    des = false;
+                                }
+                            }
+                            break;
+                        case 7:
+                            bool des2 = true;
+                            while (des2)
+                            {
+
+                                string pattern = @"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+;
+                                Regex r2 = new Regex(pattern);
+
+                                Console.WriteLine("Enter email: ");
+                                String email = Console.ReadLine();
+
+                                if (!r2.IsMatch(email))
+                                {
+                                    Console.WriteLine("Enter a valid email");
+                                    
+                                }
+                                else
+                                {
+                                    con.Email = email;
+                                    des2 = false;
+                                }
+                            }
+                            break;
+                        case 8:
+                            Console.WriteLine("Enter Zip: ");
+                            con.Zip = Console.ReadLine();
+                            break;
+
+                    }
 
                     isEdited = true;
                     break;
@@ -128,6 +217,20 @@ namespace AddressBookProblem
             }
 
             return isDeleted;
+        }
+
+
+        public bool ViewContacts()
+        {
+            bool viewed = false;
+
+            foreach(Contact con in contactsList)
+            {
+                con.ToString();
+                viewed = true;
+            }
+
+            return viewed;
         }
 
     }

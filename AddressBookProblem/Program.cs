@@ -13,89 +13,115 @@ namespace AddressBookProblem
 
             const int ADD_ADDRESSBOOK = 1;
             const int ADD_CONTACT = 1;
-            const int EDIT_CONTACT = 2;
-            const int DELETE_CONTACT = 3;
+            const int VIEW_CONTACT = 2;
+            const int EDIT_CONTACT = 3;
+            const int DELETE_CONTACT = 4;
             //variables
             bool b1 = true;
             while (b1)
             {
                 Console.WriteLine("\n1.Add AddressBook\n2.Exit\n");
-                int choose1 = Convert.ToInt32(Console.ReadLine());
 
-                switch (choose1)
-                {
-                    case ADD_ADDRESSBOOK:
+                try {
+                    int choose1 = Convert.ToInt32(Console.ReadLine());
 
-                        AddressBook ad = new AddressBook();
-                        bool b = true;
+                    switch (choose1)
+                    {
+                        case ADD_ADDRESSBOOK:
 
-                        while (b)
-                        {
-                            Console.WriteLine("\n1.Add contacts\n2.Edit Contact using name\n3.Delete Contact using name\n4.Exit");
+                            AddressBook ad = new AddressBook();
 
-                            int choice = Convert.ToInt32(Console.ReadLine());
+                            bool b = true;
 
-                            switch (choice)
+                            while (b)
                             {
-                                case ADD_CONTACT:
-                                    Console.WriteLine("\nAdding a new Contact\n");
-                                    ad.AddContact();
-                                    break;
-                                case EDIT_CONTACT:
-                                    Console.WriteLine("Edit Contact Using name\n");
-                                    Console.WriteLine("Enter First Name: ");
-                                    String fname = Console.ReadLine();
+                                Console.WriteLine("\n1.Add contacts\n2.View Contacts\n 3.Edit Contact using name\n4.Delete Contact using name\n5.Exit");
 
-                                    Console.WriteLine("Enter last Name: ");
-                                    String lname = Console.ReadLine();
+                                try
+                                {
+                                    int choice = Convert.ToInt32(Console.ReadLine());
 
-                                    bool isEdited = ad.EditContact(fname, lname);
-
-                                    if (isEdited)
+                                    switch (choice)
                                     {
-                                        Console.WriteLine("\nDetails Updated SuccessFully!!\n");
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("\nNo contact exits with this name\nEdite failed!!\n");
-                                    }
-                                    break;
+                                        case ADD_CONTACT:
+                                            Console.WriteLine("\nAdding a new Contact\n");
+                                            ad.AddContact();
+                                            break;
+                                        case VIEW_CONTACT:
+                                            Console.WriteLine("\nContacts Inside the AddressBook: \n");
+                                            bool viewed = ad.ViewContacts();
+                                            if(viewed == false)
+                                            {
+                                                Console.WriteLine("No contacts exits in AddressBook");
 
-                                case DELETE_CONTACT:
-                                    Console.WriteLine("Delete Contact Using name\n");
-                                    Console.WriteLine("Enter First Name: ");
-                                    String fName = Console.ReadLine();
+                                            }
+                                            break;
+                                        case EDIT_CONTACT:
+                                            Console.WriteLine("Edit Contact Using name\n");
+                                            Console.WriteLine("Enter First Name: ");
+                                            String fname = Console.ReadLine();
 
-                                    Console.WriteLine("Enter last Name: ");
-                                    String lName = Console.ReadLine();
+                                            Console.WriteLine("Enter last Name: ");
+                                            String lname = Console.ReadLine();
 
-                                    bool isDeleted = ad.DeleteContact(fName, lName);
+                                            bool isEdited = ad.EditContact(fname, lname);
 
-                                    if (isDeleted)
-                                    {
-                                        Console.WriteLine("\nContact SuccessFully!!\n");
+                                            if (isEdited)
+                                            {
+                                                Console.WriteLine("\nDetails Updated SuccessFully!!\n");
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("\nNo contact exits with this name\nEdite failed!!\n");
+                                            }
+                                            break;
+
+                                        case DELETE_CONTACT:
+                                            Console.WriteLine("Delete Contact Using name\n");
+                                            Console.WriteLine("Enter First Name: ");
+                                            String fName = Console.ReadLine();
+
+                                            Console.WriteLine("Enter last Name: ");
+                                            String lName = Console.ReadLine();
+
+                                            bool isDeleted = ad.DeleteContact(fName, lName);
+
+                                            if (isDeleted)
+                                            {
+                                                Console.WriteLine("\nContact SuccessFully!!\n");
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("\nNo contact exits with this name\nDelete failed!!\n");
+                                            }
+                                            break;
+                                        default:
+                                            b = false;
+                                            break;
                                     }
-                                    else
-                                    {
-                                        Console.WriteLine("\nNo contact exits with this name\nDelete failed!!\n");
-                                    }
-                                    break;
-                                default:
-                                    b = false;
-                                    break;
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine("Wrong input format!! Enter numericals(E.G: 1)");
+                                }
+
                             }
 
-                        }
+                            break;
 
-                        break;
+                        default:
+                            b1 = false;
+                            break;
 
-                    default:
-                        b1 = false;
-                        break;
+                    }
+
+                    Console.Out.WriteLine("*******************************************\n");
 
                 }
-
-                Console.Out.WriteLine("*******************************************\n");
+                catch (Exception e)
+                {
+                    Console.WriteLine("Wrong input format!! Enter numericals(E.G: 1)");
+                }
 
             }
 
