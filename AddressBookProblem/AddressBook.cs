@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace AddressBookProblem
 {
     class AddressBook
     {
+        static ValidationContext context;
+        static List<ValidationResult> result = new List<ValidationResult>();
+        static bool isValid;
+
         public List<Contact> contactsList;
 
         public AddressBook()
@@ -14,224 +18,238 @@ namespace AddressBookProblem
             contactsList = new List<Contact>();
         }
 
-        // to fetch Contact details
-        private List<string> GetDetails()
+
+        static void Validate(Contact contact, string fieldName)
         {
-            List<String> details = new List<string>();
 
-            Console.WriteLine("Enter First Name: ");
-            details.Add(Console.ReadLine());
+            Type userType = contact.GetType();
 
-            Console.WriteLine("Enter Last Name: ");
-            details.Add(Console.ReadLine());
+            MethodInfo method = userType.GetMethod("set_" + fieldName);
 
-            Console.WriteLine("Enter Address: ");
-            details.Add(Console.ReadLine());
+            string input;
 
-            Console.WriteLine("Enter city: ");
-            details.Add(Console.ReadLine());
-
-            Console.WriteLine("Enter state: ");
-            details.Add(Console.ReadLine());
-
-            Console.WriteLine("Enter zip: ");
-            details.Add(Console.ReadLine());
-
-            bool des = true;
-            while (des)
+            while (true)
             {
-                string pattern = @"[0-9]{10}";
-                Regex r = new Regex(pattern);
-                Console.WriteLine("Enter phone number: ");
-                String phno = Console.ReadLine();
+                //getting input from user
+                input = Console.ReadLine();
 
-                if (!r.IsMatch(phno))
+                //invoke the setter method to intialise variables
+
+                method.Invoke(contact, new object[] { input });
+
+                isValid = Validator.TryValidateObject(contact, context, result, true);
+
+                //valdating the input
+                if (!isValid)
                 {
-                    Console.WriteLine("Enter a valid phone number ");
-                    des = true;
+                    Console.WriteLine(result[result.Count - 1].ErrorMessage);
+                    Console.WriteLine("Please Enter your " + fieldName + " Again!!");
                 }
                 else
                 {
-                    details.Add(phno);
-                    des = false;
+                    break;
                 }
             }
-
-            bool des2 = true;
-            while (des2)
-            {
-
-                string pattern = @"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
-;
-                Regex r2 = new Regex(pattern);
-
-                Console.WriteLine("Enter email: ");
-                String email = Console.ReadLine();
-
-                if (!r2.IsMatch(email))
-                {
-                    Console.WriteLine("Enter a valid email");
-
-                }
-                else
-                {
-                    details.Add(email);
-                    des2 = false;
-                }
-            }
-
-            return details;
 
         }
-        // to Adding contact
 
-        public Contact AddContact()
+        // to fetch Contact details
+
+        private Contact GetDetails()
         {
-            List<String> details = GetDetails();
+            Contact contact = new Contact();
 
-            Contact contact = new Contact(details[0], details[1], details[2], details[3], details[4], details[5], details[6], details[7]);
+            context = new ValidationContext(contact, null, null);
 
-            contactsList.Add(contact);
+            Console.WriteLine("Enter your First Name");
+            Validate(contact, "FirstName");
+
+
+            Console.WriteLine("\nEnter your Last Name");
+            Validate(contact, "LastName");
+
+
+            Console.WriteLine("\nEnter your Address");
+            Validate(contact, "Address");
+
+            Console.WriteLine("\nEnter your City");
+            Validate(contact, "City");
+
+            Console.WriteLine("\nEnter your State");
+            Validate(contact, "State");
+
+            Console.WriteLine("\nEnter your Zip");
+            Validate(contact, "Zip");
+
+            Console.WriteLine("\nEnter your EmailId");
+            Validate(contact, "EmailId");
+
+
+            Console.WriteLine("\nEnter your Phone Number");
+            Validate(contact, "PhoneNumber");
 
             return contact;
+        }
+
+        // to Adding contact
+
+        public void AddContact()
+        {
+            Contact contact = GetDetails();
+
+            contactsList.Add(contact);
 
         }
 
         // edit contact
-        public bool EditContact(string fname, string lname)
+        public void EditContact()
         {
+            Console.WriteLine("Enter First Name: ");
+            String firstName = Console.ReadLine();
+
+            Console.WriteLine("Enter Last Name: ");
+            String lastName = Console.ReadLine();
+
             bool isEdited = false;
 
-            
-            foreach (Contact con in this.contactsList)
+            foreach (Contact contact in this.contactsList)
             {
-
-                if (con.FirstName.Equals(fname) && con.LastName.Equals(lname))
+                if (contact.FirstName.Equals(firstName) && contact.LastName.Equals(lastName))
                 {
-                    Console.WriteLine("The contact with give name exists, continue to add edit detais....\n");
+                    Console.WriteLine("Select the detail to be Edited");
+                    Console.WriteLine("1.First Name");
+                    Console.WriteLine("2.Last Name");
+                    Console.WriteLine("3.Address");
+                    Console.WriteLine("4.City");
+                    Console.WriteLine("5.State");
+                    Console.WriteLine("6.Zip");
+                    Console.WriteLine("7.Email ID");
+                    Console.WriteLine("8.Phone Number");
 
-                    Console.WriteLine("Choose the detail you want to edit:-\n1.First Name\n2.Last Name 3.Address\n4.City\n5.State\n6.PhoneNumber\n7.Email\n8.zip\n ");
-                    int choice = Convert.ToInt32(Console.ReadLine());
 
-                    switch (choice)
+                    while (true)
                     {
-                        case 1:
-                            Console.WriteLine("Enter First Name: ");
-                            con.FirstName = Console.ReadLine();
-                            break;
-                        case 2:
-                            Console.WriteLine("Enter Last Name: ");
-                            con.LastName = Console.ReadLine();
-                            break;
-                        case 3:
-                            Console.WriteLine("Enter Address: ");
-                            con.Address = Console.ReadLine();
-                            break;
-                        case 4:
-                            Console.WriteLine("Enter city: ");
-                            con.City = Console.ReadLine();
-                            break;
-                        case 5:
-                            Console.WriteLine("Enter Address: ");
-                            con.State = Console.ReadLine();
-                            break;
-                        
-                        case 6:
-                            bool des = true;
-                            while (des)
+                        int choice;
+                        try
+                        {
+                            choice = Convert.ToInt32(Console.ReadLine());
+
+                            switch (choice)
                             {
-                                string pattern = @"[0-9]{10}";
-                                Regex r = new Regex(pattern);
-                                Console.WriteLine("Enter phone number: ");
-                                String phno = Console.ReadLine();
+                                case 1:
+                                    Validate(contact, "FirstName");
+                                    break;
+                                case 2:
+                                    Validate(contact, "LastName");
+                                    break;
+                                case 3:
+                                    Validate(contact, "Address");
+                                    break;
+                                case 4:
+                                    Validate(contact, "City");
+                                    break;
+                                case 5:
+                                    Validate(contact, "State");
+                                    break;
+                                case 6:
+                                    Validate(contact, "Zip");
+                                    break;
+                                case 7:
+                                    Validate(contact, "EmailId");
+                                    break;
+                                case 8:
+                                    Validate(contact, "PhoneNumber");
+                                    break;
+                                default:
+                                    break;
 
-                                if (!r.IsMatch(phno))
-                                {
-                                    Console.WriteLine("Enter a valid phone number ");
-                                    des = true;
-                                }
-                                else
-                                {
-                                    con.PhoneNumber = phno;
-                                    des = false;
-                                }
+
                             }
-                            break;
-                        case 7:
-                            bool des2 = true;
-                            while (des2)
-                            {
 
-                                string pattern = @"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
-;
-                                Regex r2 = new Regex(pattern);
-
-                                Console.WriteLine("Enter email: ");
-                                String email = Console.ReadLine();
-
-                                if (!r2.IsMatch(email))
-                                {
-                                    Console.WriteLine("Enter a valid email");
-                                    
-                                }
-                                else
-                                {
-                                    con.Email = email;
-                                    des2 = false;
-                                }
-                            }
                             break;
-                        case 8:
-                            Console.WriteLine("Enter Zip: ");
-                            con.Zip = Console.ReadLine();
-                            break;
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Invalid Input..Enter a digit");
+                        }
 
                     }
 
                     isEdited = true;
-                    break;
                 }
 
             }
+            if (isEdited)
+            {
+                Console.WriteLine("\nDetails Updated SuccessFully!!\n");
+            }
+            else
+            {
+                Console.WriteLine("\nNo contact exits with this name\n");
+            }
 
-            return isEdited;
+
         }
 
 
-
-        public bool DeleteContact(string fname, string lname)
+        public void ViewContact()
         {
+            Console.WriteLine("Enter First Name: ");
+            String firstName = Console.ReadLine();
+
+            Console.WriteLine("Enter Last Name: ");
+            String lastName = Console.ReadLine();
+
+            bool isShown = false;
+
+            foreach (Contact contact in this.contactsList)
+            {
+                if (contact.FirstName.Equals(firstName) && contact.LastName.Equals(lastName))
+                {
+                    contact.ShowDetails();
+                    isShown = true;
+                    break;
+                }
+            }
+
+            if (isShown == false)
+            {
+                Console.WriteLine("\nNo contact exits with this name\n");
+            }
+        }
+
+        public void DeleteContact()
+        {
+            Console.WriteLine("Enter First Name: ");
+            String firstName = Console.ReadLine();
+
+            Console.WriteLine("Enter Last Name: ");
+            String lastName = Console.ReadLine();
+
             bool isDeleted = false;
 
-            foreach (Contact con in this.contactsList)
+            foreach (Contact contact in this.contactsList)
             {
-                if (con.FirstName.Equals(fname) && con.LastName.Equals(lname))
+                if (contact.FirstName.Equals(firstName) && contact.LastName.Equals(lastName))
                 {
-
-                    this.contactsList.Remove(con);
-        
+                    contactsList.Remove(contact);
                     isDeleted = true;
                     break;
                 }
-
             }
 
-            return isDeleted;
-        }
-
-
-        public bool ViewContacts()
-        {
-            bool viewed = false;
-
-            foreach(Contact con in contactsList)
+            if (isDeleted == false)
             {
-                con.ToString();
-                viewed = true;
+                Console.WriteLine("\nNo contact exits with this name\n");
             }
-
-            return viewed;
+            else
+            {
+                Console.WriteLine("\nContact Deleted successfully with name: " + firstName + " " + lastName + "\n");
+            }
         }
+
+
+
 
     }
 }
