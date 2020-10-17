@@ -188,7 +188,7 @@ namespace AddressBookProblem
                 Console.WriteLine("\nNo contact exits with this name\n");
             }
 
-            
+
         }
 
 
@@ -212,13 +212,44 @@ namespace AddressBookProblem
                 }
             }
 
-            if (isShown == false )
+            if (isShown == false)
             {
                 Console.WriteLine("\nNo contact exits with this name\n");
             }
         }
 
+        public void DeleteContact()
+        {
+            Console.WriteLine("Enter First Name: ");
+            String firstName = Console.ReadLine();
 
-        
+            Console.WriteLine("Enter Last Name: ");
+            String lastName = Console.ReadLine();
+
+            bool isDeleted = false;
+
+            foreach (Contact contact in this.contactsList)
+            {
+                if (contact.FirstName.Equals(firstName) && contact.LastName.Equals(lastName))
+                {
+                    contactsList.Remove(contact);
+                    isDeleted = true;
+                    break;
+                }
+            }
+
+            if (isDeleted == false)
+            {
+                Console.WriteLine("\nNo contact exits with this name\n");
+            }
+            else
+            {
+                Console.WriteLine("\nContact Deleted successfully with name: " + firstName + " " + lastName + "\n");
+            }
+        }
+
+
+
+
     }
 }

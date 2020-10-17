@@ -133,7 +133,7 @@ namespace AddressBookProblem
         {
             Console.WriteLine(this.FirstName + " " + this.LastName);
             Console.WriteLine(this.Address + " " + this.City);
-            Console.WriteLine(this.State+" "+this.Zip);
+            Console.WriteLine(this.State + " " + this.Zip);
             Console.WriteLine(this.EmailId + " " + this.PhoneNumber);
         }
     }

@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace AddressBookProblem
 {
-    class AddressBookProblem
+    class AddressBookProblemMain
     {
         static void Main(string[] args)
         {
@@ -19,9 +19,8 @@ namespace AddressBookProblem
 
             while (choice1)
             {
-                Console.WriteLine("\n1.Add Contact \n2.View Contact By Name \n3.Edit Contact By name \n4.Exit");
-                Console.WriteLine("\n5.Exit");
-
+                Console.WriteLine("\n1.Add Contact \n2.View Contact By Name \n3.Edit Contact By name");
+                Console.WriteLine("4.Delete Contact By Name \n5.Exit ");
                 int choice = 0;
                 try
                 {
@@ -45,6 +44,10 @@ namespace AddressBookProblem
                     case 3:
                         ad.EditContact();
                         break;
+                    case 4:
+                        ad.DeleteContact();
+                        break;
+
                     default:
                         choice1 = false;
                         break;
