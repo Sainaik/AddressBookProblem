@@ -68,6 +68,10 @@ namespace AddressBookProblem
             Console.WriteLine("\nEnter your Last Name");
             Validate(contact, "LastName");
 
+            if(IsContactExist(contact.FirstName, contact.LastName))
+            {
+                return null;
+            }
 
             Console.WriteLine("\nEnter your Address");
             Validate(contact, "Address");
@@ -97,8 +101,26 @@ namespace AddressBookProblem
         {
             Contact contact = GetDetails();
 
-            contactsList.Add(contact);
+            if (contact != null)
+            {
+                contactsList.Add(contact);
+            }
 
+        }
+
+        private bool IsContactExist(string FirstName, string LastName)
+        {
+            bool isContactExist = false;
+            foreach (Contact contact in this.contactsList)
+            {
+                if (contact.FirstName.Equals(FirstName) && contact.LastName.Equals(LastName))
+                {
+                    Console.WriteLine("\nContact Already exists with same name. Try again!!");
+
+                    isContactExist = true;
+                }
+            }
+            return isContactExist;
         }
 
         // edit contact

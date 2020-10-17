@@ -59,7 +59,7 @@ namespace AddressBookProblem
 
                         while (loop2)
                         {
-                            Console.WriteLine("\n1.Add aContact \n2.View Contact By Name \n3.Edit Contact By name");
+                            Console.WriteLine("\n1.Add a Contact \n2.View Contact By Name \n3.Edit Contact By name");
                             Console.WriteLine("4.Delete Contact By Name \n5.Exit ");
                             int choice = 0;
                             try
