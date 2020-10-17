@@ -31,6 +31,7 @@ namespace AddressBookProblem
             Console.WriteLine("Hola! New Contact is created\n ");
         }
 
+        
         public void ToString()
         {
             Console.WriteLine("Name: " + this.FirstName + " " + this.LastName + "\nAddress: " + this.Address + " " + this.City + " " + this.State+"\n");
