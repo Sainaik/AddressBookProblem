@@ -1,237 +1,132 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 namespace AddressBookProblem
 {
     class AddressBook
     {
-        public List<Contact> contactsList;
+        /// <summary>
+        /// Gets or sets the first name.
+        /// </summary>
+        /// <value>
+        /// The first name.
+        /// </value>
+       
+        [StringLength(25, MinimumLength = 3, ErrorMessage = "Invalid FirstName! Minimum 3 letters")]
+        [RegularExpression("^[A-Z]{1}[a-zA-Z ]{2,25}$", ErrorMessage = "Invalid FirstName, First letter is capital followed by small letters")]
+        public String FirstName { get; set; }
 
-        public AddressBook()
-        {
-            contactsList = new List<Contact>();
-        }
+        /// <summary>
+        /// Gets or sets the address.
+        /// </summary>
+        /// <value>
+        /// The address.
+        /// </value>
+       
+        [StringLength(25, MinimumLength = 3, ErrorMessage = "Invalid LastName! Minimum 3 letters")]
+        [RegularExpression("^[A-Z]{1}[a-z]{2,25}$", ErrorMessage = "Invalid LastName, Last letter is capital followed by small letters")]
+        public String LastName { get; set; }
 
-        // to fetch Contact details
-        private List<string> GetDetails()
-        {
-            List<String> details = new List<string>();
+        /// <summary>
+        /// Gets or sets the Address.
+        /// </summary>
+        /// <value>
+        /// The city.
+        /// </value>
 
-            Console.WriteLine("Enter First Name: ");
-            details.Add(Console.ReadLine());
-
-            Console.WriteLine("Enter Last Name: ");
-            details.Add(Console.ReadLine());
-
-            Console.WriteLine("Enter Address: ");
-            details.Add(Console.ReadLine());
-
-            Console.WriteLine("Enter city: ");
-            details.Add(Console.ReadLine());
-
-            Console.WriteLine("Enter state: ");
-            details.Add(Console.ReadLine());
-
-            Console.WriteLine("Enter zip: ");
-            details.Add(Console.ReadLine());
-
-            bool des = true;
-            while (des)
-            {
-                string pattern = @"[0-9]{10}";
-                Regex r = new Regex(pattern);
-                Console.WriteLine("Enter phone number: ");
-                String phno = Console.ReadLine();
-
-                if (!r.IsMatch(phno))
-                {
-                    Console.WriteLine("Enter a valid phone number ");
-                    des = true;
-                }
-                else
-                {
-                    details.Add(phno);
-                    des = false;
-                }
-            }
-
-            bool des2 = true;
-            while (des2)
-            {
-
-                string pattern = @"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
-;
-                Regex r2 = new Regex(pattern);
-
-                Console.WriteLine("Enter email: ");
-                String email = Console.ReadLine();
-
-                if (!r2.IsMatch(email))
-                {
-                    Console.WriteLine("Enter a valid email");
-
-                }
-                else
-                {
-                    details.Add(email);
-                    des2 = false;
-                }
-            }
-
-            return details;
-
-        }
-        // to Adding contact
-
-        public Contact AddContact()
-        {
-            List<String> details = GetDetails();
-
-            Contact contact = new Contact(details[0], details[1], details[2], details[3], details[4], details[5], details[6], details[7]);
-
-            contactsList.Add(contact);
-
-            return contact;
-
-        }
-
-        // edit contact
-        public bool EditContact(string fname, string lname)
-        {
-            bool isEdited = false;
-
-            
-            foreach (Contact con in this.contactsList)
-            {
-
-                if (con.FirstName.Equals(fname) && con.LastName.Equals(lname))
-                {
-                    Console.WriteLine("The contact with give name exists, continue to add edit detais....\n");
-
-                    Console.WriteLine("Choose the detail you want to edit:-\n1.First Name\n2.Last Name 3.Address\n4.City\n5.State\n6.PhoneNumber\n7.Email\n8.zip\n ");
-                    int choice = Convert.ToInt32(Console.ReadLine());
-
-                    switch (choice)
-                    {
-                        case 1:
-                            Console.WriteLine("Enter First Name: ");
-                            con.FirstName = Console.ReadLine();
-                            break;
-                        case 2:
-                            Console.WriteLine("Enter Last Name: ");
-                            con.LastName = Console.ReadLine();
-                            break;
-                        case 3:
-                            Console.WriteLine("Enter Address: ");
-                            con.Address = Console.ReadLine();
-                            break;
-                        case 4:
-                            Console.WriteLine("Enter city: ");
-                            con.City = Console.ReadLine();
-                            break;
-                        case 5:
-                            Console.WriteLine("Enter Address: ");
-                            con.State = Console.ReadLine();
-                            break;
-                        
-                        case 6:
-                            bool des = true;
-                            while (des)
-                            {
-                                string pattern = @"[0-9]{10}";
-                                Regex r = new Regex(pattern);
-                                Console.WriteLine("Enter phone number: ");
-                                String phno = Console.ReadLine();
-
-                                if (!r.IsMatch(phno))
-                                {
-                                    Console.WriteLine("Enter a valid phone number ");
-                                    des = true;
-                                }
-                                else
-                                {
-                                    con.PhoneNumber = phno;
-                                    des = false;
-                                }
-                            }
-                            break;
-                        case 7:
-                            bool des2 = true;
-                            while (des2)
-                            {
-
-                                string pattern = @"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
-;
-                                Regex r2 = new Regex(pattern);
-
-                                Console.WriteLine("Enter email: ");
-                                String email = Console.ReadLine();
-
-                                if (!r2.IsMatch(email))
-                                {
-                                    Console.WriteLine("Enter a valid email");
-                                    
-                                }
-                                else
-                                {
-                                    con.Email = email;
-                                    des2 = false;
-                                }
-                            }
-                            break;
-                        case 8:
-                            Console.WriteLine("Enter Zip: ");
-                            con.Zip = Console.ReadLine();
-                            break;
-
-                    }
-
-                    isEdited = true;
-                    break;
-                }
-
-            }
-
-            return isEdited;
-        }
-
-
-
-        public bool DeleteContact(string fname, string lname)
-        {
-            bool isDeleted = false;
-
-            foreach (Contact con in this.contactsList)
-            {
-                if (con.FirstName.Equals(fname) && con.LastName.Equals(lname))
-                {
-
-                    this.contactsList.Remove(con);
         
-                    isDeleted = true;
-                    break;
-                }
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Invalid Address! Minimum 3 letters")]
+        [RegularExpression(@"^[a-zA-Z:,.0-9]{3,100}$", ErrorMessage = "Invalid Address!")]
+        public String Address { get; set; }
 
-            }
+        /// <summary>
+        /// Gets or sets the city.
+        /// </summary>
+        /// <value>
+        /// The city.
+        /// </value>
+       
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Invalid City! Minimum 3 letters")]
+        [RegularExpression("^[A-Z]{1}[a-z]{2,100}$", ErrorMessage = "Invalid City! First letter should be Capital")]
+        public String City { get; set; }
 
-            return isDeleted;
-        }
+        /// <summary>
+        /// Gets or sets the state.
+        /// </summary>
+        /// <value>
+        /// The state.
+        /// </value>
+       
+       
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Invalid State! Minimum 3 letters")]
+        [RegularExpression("^[A-Z]{1}[a-z]{2,100}$", ErrorMessage = "Invalid State! First letter should be Capital")]
+        public String State { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
+        /// <value>
+        /// The email.
+        /// </value>
+        
+        [StringLength(25, MinimumLength = 5, ErrorMessage = "Invalid Email! Minimum 5 letters")]
+        [RegularExpression(@"^[a-z]+([-+*.]?[0-9a-z])*@[a-z0-9]+\.(\.?[a-z]{2,}){1,2}$", ErrorMessage = "Invalid Emailid!")]
+        public String EmailId { get; set; }
+
+        /// <summary>
+        /// Gets the zip.
+        /// </summary>
+        /// <value>
+        /// The zip.
+        /// </value>
+        
+        [StringLength(6, ErrorMessage = "Invalid Zip! Zip is 6 digits")]
+        [RegularExpression("^[1-9][0-9]{5}$", ErrorMessage = "Invalid Zip!")]
+        public String Zip { get; set; }
+
+        /// <summary>
+        /// Gets or sets the phone number.
+        /// </summary>
+        /// <value>
+        /// The phone number.
+        /// </value>
+       
+        [StringLength(25, MinimumLength = 13, ErrorMessage = " Minimum 13 letters, Use pattern: +(countycode)(phonenumber)")]
+        [RegularExpression("^[+][0-9]{1,3}[\\s]*[0-9]{10}$", ErrorMessage = "Invalid PhoneNumber! Use pattern: +(countycode)(phonenumber)")]
+        public String PhoneNumber { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddressBook"/> class.
+        /// </summary>
+        public AddressBook() { }
+        
 
 
-        public bool ViewContacts()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddressBook"/> class.
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="address">The address.</param>
+        /// <param name="city">The city.</param>
+        /// <param name="state">The state.</param>
+        /// <param name="zip">The zip.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="email">The email.</param>
+        public AddressBook(String firstName, String lastName, String address, String city, String state, string zip, string phoneNumber, String email)
         {
-            bool viewed = false;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Address = address;
+            this.City = city;
+            this.State = state;
+            this.Zip = zip;
+            this.PhoneNumber = phoneNumber;
+            this.EmailId = email;
 
-            foreach(Contact con in contactsList)
-            {
-                con.ToString();
-                viewed = true;
-            }
-
-            return viewed;
+            Console.WriteLine("Hola!! New Contact is created");
         }
-
     }
 }
