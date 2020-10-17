@@ -1,132 +1,224 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace AddressBookProblem
 {
     class AddressBook
     {
-        /// <summary>
-        /// Gets or sets the first name.
-        /// </summary>
-        /// <value>
-        /// The first name.
-        /// </value>
-       
-        [StringLength(25, MinimumLength = 3, ErrorMessage = "Invalid FirstName! Minimum 3 letters")]
-        [RegularExpression("^[A-Z]{1}[a-zA-Z ]{2,25}$", ErrorMessage = "Invalid FirstName, First letter is capital followed by small letters")]
-        public String FirstName { get; set; }
+        static ValidationContext context;
+        static List<ValidationResult> result = new List<ValidationResult>();
+        static bool isValid;
 
-        /// <summary>
-        /// Gets or sets the address.
-        /// </summary>
-        /// <value>
-        /// The address.
-        /// </value>
-       
-        [StringLength(25, MinimumLength = 3, ErrorMessage = "Invalid LastName! Minimum 3 letters")]
-        [RegularExpression("^[A-Z]{1}[a-z]{2,25}$", ErrorMessage = "Invalid LastName, Last letter is capital followed by small letters")]
-        public String LastName { get; set; }
+        public List<Contact> contactsList;
 
-        /// <summary>
-        /// Gets or sets the Address.
-        /// </summary>
-        /// <value>
-        /// The city.
-        /// </value>
-
-        
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "Invalid Address! Minimum 3 letters")]
-        [RegularExpression(@"^[a-zA-Z:,.0-9]{3,100}$", ErrorMessage = "Invalid Address!")]
-        public String Address { get; set; }
-
-        /// <summary>
-        /// Gets or sets the city.
-        /// </summary>
-        /// <value>
-        /// The city.
-        /// </value>
-       
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Invalid City! Minimum 3 letters")]
-        [RegularExpression("^[A-Z]{1}[a-z]{2,100}$", ErrorMessage = "Invalid City! First letter should be Capital")]
-        public String City { get; set; }
-
-        /// <summary>
-        /// Gets or sets the state.
-        /// </summary>
-        /// <value>
-        /// The state.
-        /// </value>
-       
-       
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Invalid State! Minimum 3 letters")]
-        [RegularExpression("^[A-Z]{1}[a-z]{2,100}$", ErrorMessage = "Invalid State! First letter should be Capital")]
-        public String State { get; set; }
-
-        /// <summary>
-        /// Gets or sets the email.
-        /// </summary>
-        /// <value>
-        /// The email.
-        /// </value>
-        
-        [StringLength(25, MinimumLength = 5, ErrorMessage = "Invalid Email! Minimum 5 letters")]
-        [RegularExpression(@"^[a-z]+([-+*.]?[0-9a-z])*@[a-z0-9]+\.(\.?[a-z]{2,}){1,2}$", ErrorMessage = "Invalid Emailid!")]
-        public String EmailId { get; set; }
-
-        /// <summary>
-        /// Gets the zip.
-        /// </summary>
-        /// <value>
-        /// The zip.
-        /// </value>
-        
-        [StringLength(6, ErrorMessage = "Invalid Zip! Zip is 6 digits")]
-        [RegularExpression("^[1-9][0-9]{5}$", ErrorMessage = "Invalid Zip!")]
-        public String Zip { get; set; }
-
-        /// <summary>
-        /// Gets or sets the phone number.
-        /// </summary>
-        /// <value>
-        /// The phone number.
-        /// </value>
-       
-        [StringLength(25, MinimumLength = 13, ErrorMessage = " Minimum 13 letters, Use pattern: +(countycode)(phonenumber)")]
-        [RegularExpression("^[+][0-9]{1,3}[\\s]*[0-9]{10}$", ErrorMessage = "Invalid PhoneNumber! Use pattern: +(countycode)(phonenumber)")]
-        public String PhoneNumber { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AddressBook"/> class.
-        /// </summary>
-        public AddressBook() { }
-        
-
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AddressBook"/> class.
-        /// </summary>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastName">The last name.</param>
-        /// <param name="address">The address.</param>
-        /// <param name="city">The city.</param>
-        /// <param name="state">The state.</param>
-        /// <param name="zip">The zip.</param>
-        /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="email">The email.</param>
-        public AddressBook(String firstName, String lastName, String address, String city, String state, string zip, string phoneNumber, String email)
+        public AddressBook()
         {
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.Address = address;
-            this.City = city;
-            this.State = state;
-            this.Zip = zip;
-            this.PhoneNumber = phoneNumber;
-            this.EmailId = email;
-
-            Console.WriteLine("Hola!! New Contact is created");
+            contactsList = new List<Contact>();
         }
+
+
+        static void Validate(Contact contact, string fieldName)
+        {
+
+            Type userType = contact.GetType();
+
+            MethodInfo method = userType.GetMethod("set_" + fieldName);
+
+            string input;
+
+            while (true)
+            {
+                //getting input from user
+                input = Console.ReadLine();
+
+                //invoke the setter method to intialise variables
+
+                method.Invoke(contact, new object[] { input });
+
+                isValid = Validator.TryValidateObject(contact, context, result, true);
+
+                //valdating the input
+                if (!isValid)
+                {
+                    Console.WriteLine(result[result.Count - 1].ErrorMessage);
+                    Console.WriteLine("Please Enter your " + fieldName + " Again!!");
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+        }
+
+        // to fetch Contact details
+
+        private Contact GetDetails()
+        {
+            Contact contact = new Contact();
+
+            context = new ValidationContext(contact, null, null);
+
+            Console.WriteLine("Enter your First Name");
+            Validate(contact, "FirstName");
+
+
+            Console.WriteLine("\nEnter your Last Name");
+            Validate(contact, "LastName");
+
+
+            Console.WriteLine("\nEnter your Address");
+            Validate(contact, "Address");
+
+            Console.WriteLine("\nEnter your City");
+            Validate(contact, "City");
+
+            Console.WriteLine("\nEnter your State");
+            Validate(contact, "State");
+
+            Console.WriteLine("\nEnter your Zip");
+            Validate(contact, "Zip");
+
+            Console.WriteLine("\nEnter your EmailId");
+            Validate(contact, "EmailId");
+
+
+            Console.WriteLine("\nEnter your Phone Number");
+            Validate(contact, "PhoneNumber");
+
+            return contact;
+        }
+
+        // to Adding contact
+
+        public void AddContact()
+        {
+            Contact contact = GetDetails();
+
+            contactsList.Add(contact);
+
+        }
+
+        // edit contact
+        public void EditContact()
+        {
+            Console.WriteLine("Enter First Name: ");
+            String firstName = Console.ReadLine();
+
+            Console.WriteLine("Enter Last Name: ");
+            String lastName = Console.ReadLine();
+
+            bool isEdited = false;
+
+            foreach (Contact contact in this.contactsList)
+            {
+                if (contact.FirstName.Equals(firstName) && contact.LastName.Equals(lastName))
+                {
+                    Console.WriteLine("Select the detail to be Edited");
+                    Console.WriteLine("1.First Name");
+                    Console.WriteLine("2.Last Name");
+                    Console.WriteLine("3.Address");
+                    Console.WriteLine("4.City");
+                    Console.WriteLine("5.State");
+                    Console.WriteLine("6.Zip");
+                    Console.WriteLine("7.Email ID");
+                    Console.WriteLine("8.Phone Number");
+
+
+                    while (true)
+                    {
+                        int choice;
+                        try
+                        {
+                            choice = Convert.ToInt32(Console.ReadLine());
+
+                            switch (choice)
+                            {
+                                case 1:
+                                    Validate(contact, "FirstName");
+                                    break;
+                                case 2:
+                                    Validate(contact, "LastName");
+                                    break;
+                                case 3:
+                                    Validate(contact, "Address");
+                                    break;
+                                case 4:
+                                    Validate(contact, "City");
+                                    break;
+                                case 5:
+                                    Validate(contact, "State");
+                                    break;
+                                case 6:
+                                    Validate(contact, "Zip");
+                                    break;
+                                case 7:
+                                    Validate(contact, "EmailId");
+                                    break;
+                                case 8:
+                                    Validate(contact, "PhoneNumber");
+                                    break;
+                                default:
+                                    break;
+
+
+                            }
+
+                            break;
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Invalid Input..Enter a digit");
+                        }
+
+                    }
+
+                    isEdited = true;
+                }
+
+            }
+            if (isEdited)
+            {
+                Console.WriteLine("\nDetails Updated SuccessFully!!\n");
+            }
+            else
+            {
+                Console.WriteLine("\nNo contact exits with this name\n");
+            }
+
+            
+        }
+
+
+        public void ViewContact()
+        {
+            Console.WriteLine("Enter First Name: ");
+            String firstName = Console.ReadLine();
+
+            Console.WriteLine("Enter Last Name: ");
+            String lastName = Console.ReadLine();
+
+            bool isShown = false;
+
+            foreach (Contact contact in this.contactsList)
+            {
+                if (contact.FirstName.Equals(firstName) && contact.LastName.Equals(lastName))
+                {
+                    contact.ShowDetails();
+                    isShown = true;
+                    break;
+                }
+            }
+
+            if (isShown == false )
+            {
+                Console.WriteLine("\nNo contact exits with this name\n");
+            }
+        }
+
+
+        
     }
 }
