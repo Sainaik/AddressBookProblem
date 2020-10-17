@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace AddressBookProblem
 {
-    class AddressBook
+    public class AddressBook
     {
         static ValidationContext context;
         static List<ValidationResult> result = new List<ValidationResult>();

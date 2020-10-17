@@ -8,6 +8,7 @@ namespace AddressBookProblem
     class AddressBookMain
     {
        static Dictionary<String, AddressBook> addressBookDictionary = new Dictionary<string, AddressBook>();
+       static List<AddressBook> addressBooksList = new List<AddressBook>();
 
         static void Main(string[] args)
         {
@@ -17,7 +18,8 @@ namespace AddressBookProblem
 
             while (loop1)
             {
-                Console.WriteLine("\n1.Add AddressBook \n2.View AddressBooks \n3.Exit ");
+                Console.WriteLine("\n1.Add AddressBook \n2.View AddressBooks");
+                Console.WriteLine("3.Searching Contact by City or State\n4.Exit ");
                 int choice1 = 0;
                 try
                 {
@@ -94,6 +96,8 @@ namespace AddressBookProblem
                             }
                         }
                         addressBookDictionary.Add(addressBookName, addressBook);
+                        addressBooksList.Add(addressBook);
+
                         break;
                     case 2:
                         Console.WriteLine("Available AddressBooks: ");
@@ -102,17 +106,82 @@ namespace AddressBookProblem
                         {
                             Console.WriteLine("AddressBook Name: " + keyValue.Key);
                         }
+                        break;      
+
+                    case 3:
+                        Console.WriteLine("Your Searching Contact by City or State");
+                        AddressBookMain.ContactsByCityOrState();
                         break;
 
-                        default:
+                    default:
                         loop1 = false;
                         break;
-                 
+
+
+
                 }
             }
             Console.WriteLine("Thanks for Using the Application!!");
 
-        } 
+        }
+        
+
+        static void ContactsByCityOrState()
+        {
+
+            Console.WriteLine("\n1.Select by city \n2.Select by State");
+
+            int choice3 = 0;
             
+            try
+            {
+                choice3 = Convert.ToInt32(Console.ReadLine());
+            }
+            catch
+            {
+                Console.WriteLine("Invalid Input!! Try again");
+
+            }
+            
+            
+            if (choice3 == 1)
+            {
+                Console.WriteLine("Your Searching Contact by City");
+                Console.WriteLine("Enter the City");
+                string city = Console.ReadLine();
+
+                foreach(AddressBook addressBook in addressBooksList)
+                {
+                    foreach(Contact contact in addressBook.contactsList)
+                    {
+                        if(contact.City.Equals(city))
+                        {
+                            Console.WriteLine("Name : " + contact.FirstName + " City: " + contact.City);
+                        }    
+                    }
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Your Searching Contact by State");
+                Console.WriteLine("Enter the State");
+                string state = Console.ReadLine();
+                foreach (AddressBook addressBook in addressBooksList)
+                {
+                    foreach (Contact contact in addressBook.contactsList)
+                    {
+                        if (contact.State.Equals(state))
+                        {
+                            Console.WriteLine("Name : " + contact.FirstName +" "+ contact.LastName+ " City: " + contact.City);
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+
     }
 }
