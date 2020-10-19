@@ -146,6 +146,7 @@ namespace AddressBookProblem
             
             if (choice3 == 1)
             {
+                int count = 0;
                 Console.WriteLine("Your Searching Contact by City");
                 Console.WriteLine("Enter the City");
                 string city = Console.ReadLine();
@@ -156,10 +157,13 @@ namespace AddressBookProblem
                     {
                         if(contact.City.Equals(city))
                         {
+                            count++;
                             Console.WriteLine("Name : " + contact.FirstName + " City: " + contact.City);
                         }    
                     }
                 }
+
+                Console.WriteLine($"No of Contacts in the City: {city} are {count}");
 
             }
             else
@@ -167,16 +171,19 @@ namespace AddressBookProblem
                 Console.WriteLine("Your Searching Contact by State");
                 Console.WriteLine("Enter the State");
                 string state = Console.ReadLine();
+                int count = 0;
                 foreach (AddressBook addressBook in addressBooksList)
                 {
                     foreach (Contact contact in addressBook.contactsList)
                     {
                         if (contact.State.Equals(state))
                         {
+                            count++;
                             Console.WriteLine("Name : " + contact.FirstName +" "+ contact.LastName+ " City: " + contact.City);
                         }
                     }
                 }
+                Console.WriteLine($"No of Contacts in the State: {state} are {count}");
 
             }
 
