@@ -5,6 +5,7 @@ using System.Text;
 
 namespace AddressBookProblem
 {
+    [Serializable]
     public class Contact
     {/// <summary>
      /// Gets or sets the first name.
@@ -131,10 +132,10 @@ namespace AddressBookProblem
 
         public void ShowDetails()
         {
-            Console.WriteLine(this.FirstName + " " + this.LastName);
-            Console.WriteLine(this.Address + " " + this.City);
-            Console.WriteLine(this.State + " " + this.Zip);
-            Console.WriteLine(this.EmailId + " " + this.PhoneNumber);
+            Console.WriteLine($"\nName: {this.FirstName} {this.LastName}");
+            Console.WriteLine($"Address: {this.Address}, City: {this.City}");
+            Console.WriteLine($"State: {this.State}, Zip: {this.Zip}");
+            Console.WriteLine($"Email: {this.EmailId}, Phone Number: {this.PhoneNumber}");
         }
     }
 }

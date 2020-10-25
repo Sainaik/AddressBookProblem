@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace AddressBookProblem
 {
     class AddressBookMain
     {
-       static Dictionary<String, AddressBook> addressBookDictionary = new Dictionary<string, AddressBook>();
-       static List<AddressBook> addressBooksList = new List<AddressBook>();
+        static Dictionary<String, AddressBook> addressBookDictionary = new Dictionary<string, AddressBook>();
+        static List<AddressBook> addressBooksList = new List<AddressBook>();
+
 
         static void Main(string[] args)
         {
@@ -19,7 +22,7 @@ namespace AddressBookProblem
             while (loop1)
             {
                 Console.WriteLine("\n1.Add AddressBook \n2.View AddressBooks");
-                Console.WriteLine("3.Searching Contact by City or State\n4.Exit ");
+                Console.WriteLine("3.Searching Contact by City or State\n4.Add AdrdressBook to the IO File\n5.Read AdrdressBook from the IO File ");
                 int choice1 = 0;
                 try
                 {
@@ -41,22 +44,22 @@ namespace AddressBookProblem
 
                         addressBookName = Console.ReadLine();
 
-                        bool  isKeyAvailable = false;
+                        bool isKeyAvailable = false;
 
-                        foreach(KeyValuePair<string,AddressBook> keyValue in addressBookDictionary)
+                        foreach (KeyValuePair<string, AddressBook> keyValue in addressBookDictionary)
                         {
-                            if(keyValue.Key.Equals(addressBookName))
+                            if (keyValue.Key.Equals(addressBookName))
                             {
                                 isKeyAvailable = true;
                             }
                         }
-                        if(isKeyAvailable)
+                        if (isKeyAvailable)
                         {
                             Console.WriteLine("AddessBook Name is available, try other name\n");
                             break;
 
                         }
-                        
+
                         bool loop2 = true;
 
                         while (loop2)
@@ -102,15 +105,25 @@ namespace AddressBookProblem
                     case 2:
                         Console.WriteLine("Available AddressBooks: ");
 
-                        foreach(KeyValuePair<String,AddressBook> keyValue in addressBookDictionary)
+                        foreach (KeyValuePair<String, AddressBook> keyValue in addressBookDictionary)
                         {
                             Console.WriteLine("AddressBook Name: " + keyValue.Key);
                         }
-                        break;      
+                        break;
 
                     case 3:
                         Console.WriteLine("Your Searching Contact by City or State");
                         AddressBookMain.ContactsByCityOrState();
+                        break;
+                    case 4:
+                        Console.WriteLine("Adding AddressBook into IO File");
+
+                        AddressBookMain.AddAddressBookToFileIO();
+                        break;
+                    case 5:
+                        Console.WriteLine("Read AddressBook from IO File");
+
+                        AddressBookMain.ReadAddressBookToFileIO();
                         break;
 
                     default:
@@ -124,7 +137,7 @@ namespace AddressBookProblem
             Console.WriteLine("Thanks for Using the Application!!");
 
         }
-        
+
 
         static void ContactsByCityOrState()
         {
@@ -132,7 +145,7 @@ namespace AddressBookProblem
             Console.WriteLine("\n1.Select by city \n2.Select by State");
 
             int choice3 = 0;
-            
+
             try
             {
                 choice3 = Convert.ToInt32(Console.ReadLine());
@@ -142,8 +155,8 @@ namespace AddressBookProblem
                 Console.WriteLine("Invalid Input!! Try again");
 
             }
-            
-            
+
+
             if (choice3 == 1)
             {
                 int count = 0;
@@ -151,15 +164,15 @@ namespace AddressBookProblem
                 Console.WriteLine("Enter the City");
                 string city = Console.ReadLine();
 
-                foreach(AddressBook addressBook in addressBooksList)
+                foreach (AddressBook addressBook in addressBooksList)
                 {
-                    foreach(Contact contact in addressBook.contactsList)
+                    foreach (Contact contact in addressBook.contactsList)
                     {
-                        if(contact.City.Equals(city))
+                        if (contact.City.Equals(city))
                         {
                             count++;
                             Console.WriteLine("Name : " + contact.FirstName + " City: " + contact.City);
-                        }    
+                        }
                     }
                 }
 
@@ -179,16 +192,103 @@ namespace AddressBookProblem
                         if (contact.State.Equals(state))
                         {
                             count++;
-                            Console.WriteLine("Name : " + contact.FirstName +" "+ contact.LastName+ " City: " + contact.City);
+                            Console.WriteLine("Name : " + contact.FirstName + " " + contact.LastName + " City: " + contact.City);
                         }
                     }
                 }
                 Console.WriteLine($"No of Contacts in the State: {state} are {count}");
 
             }
-
         }
 
 
+        public static void AddAddressBookToFileIO()
+        {
+
+            Console.WriteLine("Adding AddressBook to A File");
+            bool isWriten = false;
+            string path = @"C:\Users\saiku\source\repos\AddressBookProblem\AddressBookContacts\";
+            bool exit = false;
+            while (isWriten == false && exit == false)
+            {
+                Console.WriteLine("Enter the AddressBook Name");
+                string addressBookName = Console.ReadLine();
+
+                foreach (KeyValuePair<string, AddressBook> addressBookdict in addressBookDictionary)
+                {
+                    if (addressBookdict.Key.Equals(addressBookName))
+                    {
+                        path += addressBookName + ".txt";
+                        Console.WriteLine($"File path :{path}");
+                        FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
+                        BinaryFormatter binaryFormatter = new BinaryFormatter();
+                        binaryFormatter.Serialize(fileStream, addressBookdict.Value);
+                        Console.WriteLine($"AddressBook {addressBookName} is added successfully to the File");
+                        fileStream.Close();
+                        isWriten = true;
+                    }
+                }
+
+                if (isWriten == false)
+                {
+                    Console.WriteLine("Invalid AddressBook Name! Try again!!");
+                    Console.WriteLine("Enter 'yes' or 'y' to exit");
+                    string exitt = Console.ReadLine();
+                    if (exitt.Equals("yes") || exitt.Equals("y"))
+                    {
+                        exit = true;
+                    }
+                }
+
+
+            }
+        }
+
+
+        public static void ReadAddressBookToFileIO()
+        {
+
+            Console.WriteLine("Your reading AddressBook from A File");
+            bool isRead = false;
+            string path = @"C:\Users\saiku\source\repos\AddressBookProblem\AddressBookContacts\";
+            bool exit = false;
+            while (isRead == false && exit == false)
+            {
+                Console.WriteLine("Enter the AddressBook Name");
+                string addressBookName = Console.ReadLine();
+                path += addressBookName + ".txt";
+                Console.WriteLine($"File path :{path}");
+
+                if (File.Exists(path))
+                {
+                    FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+                    BinaryFormatter binaryFormatter = new BinaryFormatter();
+                    AddressBook addressBook = (AddressBook)binaryFormatter.Deserialize(fileStream);
+                    Console.WriteLine("AddressBook contacts can be viewed");
+                    addressBook.ViewContact();
+
+                    fileStream.Close();
+                    isRead = true;
+                }
+
+
+                if (isRead == false)
+                {
+                    Console.WriteLine("Invalid AddressBook Name! Try again!!");
+                    Console.WriteLine("Enter 'yes' or 'y' to exit");
+                    string exitt = Console.ReadLine();
+                    if (exitt.Equals("yes") || exitt.Equals("y"))
+                    {
+                        exit = true;
+                    }
+                }
+            }
+
+
+        }
     }
+
+
+
+
 }
