@@ -243,7 +243,29 @@ namespace AddressBookProblem
 
         public void ViewAllContacts()
         {
-            this.SortBasedOnName();
+            Console.WriteLine("View Contacts Sorted by: ");
+            Console.WriteLine("1.Name, \n2.City, \n3.State, \n4.Zip");
+            string sortby = Console.ReadLine();
+
+            if(sortby.Equals("2"))
+            {
+                this.SortByCity();
+            }
+            else if (sortby.Equals("3"))
+            {
+                this.SortByState();
+            }
+            else if (sortby.Equals("4"))
+            {
+                this.SortByZip();
+            }
+            else
+            {
+                this.SortByName();
+            }
+
+
+            
             foreach (Contact contact in this.contactsList)
             {
                 Console.WriteLine(contact.ToString());
@@ -281,11 +303,24 @@ namespace AddressBookProblem
             }
         }
 
-        public void SortBasedOnName()
+        public void SortByName()
         {
             this.contactsList = this.contactsList.OrderBy(o => o.FirstName).ToList();
         }
 
+        public void SortByCity()
+        {
+            this.contactsList = this.contactsList.OrderBy(o => o.City).ToList();
+        }
+        public void SortByState()
+        {
+            this.contactsList = this.contactsList.OrderBy(o => o.State).ToList();
+        }
+
+        public void SortByZip()
+        {
+            this.contactsList = this.contactsList.OrderBy(o => o.Zip).ToList();
+        }
 
     }
 }
