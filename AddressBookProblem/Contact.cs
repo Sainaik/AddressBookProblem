@@ -5,6 +5,7 @@ using System.Text;
 
 namespace AddressBookProblem
 {
+    [Serializable]
     public class Contact
     {/// <summary>
      /// Gets or sets the first name.

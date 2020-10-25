@@ -6,6 +6,7 @@ using System.Reflection;
 
 namespace AddressBookProblem
 {
+    [Serializable]
     public class AddressBook
     {
         static ValidationContext context;
