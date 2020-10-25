@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Reflection;
 
 namespace AddressBookProblem
@@ -228,7 +229,7 @@ namespace AddressBookProblem
             {
                 if (contact.FirstName.Equals(firstName) && contact.LastName.Equals(lastName))
                 {
-                    contact.ShowDetails();
+                    Console.WriteLine(contact.ToString());
                     isShown = true;
                     break;
                 }
@@ -237,6 +238,16 @@ namespace AddressBookProblem
             if (isShown == false)
             {
                 Console.WriteLine("\nNo contact exits with this name\n");
+            }
+        }
+
+        public void ViewAllContacts()
+        {
+            this.SortBasedOnName();
+            foreach (Contact contact in this.contactsList)
+            {
+                Console.WriteLine(contact.ToString());
+
             }
         }
 
@@ -270,7 +281,10 @@ namespace AddressBookProblem
             }
         }
 
-
+        public void SortBasedOnName()
+        {
+            this.contactsList = this.contactsList.OrderBy(o => o.FirstName).ToList();
+        }
 
 
     }

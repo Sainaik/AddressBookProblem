@@ -61,8 +61,8 @@ namespace AddressBookProblem
 
                         while (loop2)
                         {
-                            Console.WriteLine("\n1.Add a Contact \n2.View Contact By Name \n3.Edit Contact By name");
-                            Console.WriteLine("4.Delete Contact By Name \n5.Exit ");
+                            Console.WriteLine("\n1.Add a Contact \n2.View Contact By Name \n3.View All Contacts \n4.Edit Contact By name");
+                            Console.WriteLine("5.Delete Contact By Name \n6.Exit ");
                             int choice = 0;
                             try
                             {
@@ -84,9 +84,12 @@ namespace AddressBookProblem
                                     addressBook.ViewContact();
                                     break;
                                 case 3:
-                                    addressBook.EditContact();
+                                    addressBook.ViewAllContacts();
                                     break;
                                 case 4:
+                                    addressBook.EditContact();
+                                    break;
+                                case 5:
                                     addressBook.DeleteContact();
                                     break;
 

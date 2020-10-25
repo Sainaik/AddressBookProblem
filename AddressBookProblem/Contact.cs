@@ -129,12 +129,10 @@ namespace AddressBookProblem
         }
 
 
-        public void ShowDetails()
+        public override string ToString()
         {
-            Console.WriteLine(this.FirstName + " " + this.LastName);
-            Console.WriteLine(this.Address + " " + this.City);
-            Console.WriteLine(this.State + " " + this.Zip);
-            Console.WriteLine(this.EmailId + " " + this.PhoneNumber);
-        }
+            return (($"\nName: {this.FirstName} {this.LastName}\nAddress: { this.Address}, City: { this.City}\nState: { this.State}, Zip: { this.Zip}\nEmail: { this.EmailId}, Phone Number: { this.PhoneNumber}"));
+
+        }  
     }
 }
