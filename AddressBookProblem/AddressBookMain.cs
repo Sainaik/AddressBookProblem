@@ -9,7 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Linq;
 using CsvHelper;
 using System.Globalization;
-
+using Newtonsoft.Json;
 
 namespace AddressBookProblem
 {
@@ -30,7 +30,7 @@ namespace AddressBookProblem
             {
                 Console.WriteLine("\n1.Add AddressBook \n2.View AddressBooks");
                 Console.WriteLine("3.Searching Contact by City or State\n4.Add AdrdressBook to the IO File\n5.Read AdrdressBook from the IO File ");
-                Console.WriteLine("6.Add AdrdressBook to the CSV File\n 7.Read AdrdressBook from CSV file\n8.Exit ");
+                Console.WriteLine("6.Add AdrdressBook to the CSV File\n7.Read AdrdressBook from CSV file\n8.Add AdrdressBook to the Json File\n9.Read AdrdressBook from Json file\n0.Exit ");
                 int choice1 = 0;
                 try
                 {
@@ -142,10 +142,21 @@ namespace AddressBookProblem
 
                         AddressBookMain.AddAddressBookToCsv();
                         break;
+
                     case 7:
-                        Console.WriteLine("Reading AddressBook CSV File");
+                        Console.WriteLine("Reading AddressBook from CSV File");
 
                         AddressBookMain.ReadAddressBookFromCsv();
+                        break;
+                    case 8:
+                        Console.WriteLine("Adding AddressBook into Json File");
+
+                        AddressBookMain.AddAddressBookToJsonFile();
+                        break;
+                    case 9:
+                        Console.WriteLine("Reading AddressBook from Json File");
+
+                        AddressBookMain.ReadAddressBookFromJsonFile();
                         break;
 
 
@@ -354,7 +365,57 @@ namespace AddressBookProblem
             }
 
         }
+
+
+        public static void AddAddressBookToJsonFile()
+        {
+            string exportFilePath = @"C:\Users\saiku\source\repos\AddressBookProblem\Utility\ExportDataJson.json";
+            Console.WriteLine("Writing Data:");
+
+            var records = addressBooksList;
+
+            Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+
+            using (StreamWriter sw = new StreamWriter(exportFilePath))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                serializer.Serialize(writer, records);
+            }
+            Console.WriteLine("Writed Data successfully:");
+        }
+
+
+
+        public static void ReadAddressBookFromJsonFile()
+        {
+            string importFilePath = @"C:\Users\saiku\source\repos\AddressBookProblem\Utility\ExportDataJson.json";
+
+            if (File.Exists(importFilePath))
+            {
+                using (var reader = new StreamReader(importFilePath))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    IList<AddressBook> addressBooks = JsonConvert.DeserializeObject<IList<AddressBook>>(File.ReadAllText(importFilePath));
+                    Console.WriteLine("Reading Data ......\n");
+
+                    foreach (AddressBook addressbook in addressBooks)
+                    {
+                        addressbook.ViewAllContacts();
+                    }
+                    Console.WriteLine("Readed Data successFully");
+
+
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Json File doesnot exit.. Add the file.");
+            }
+
+        }
     }
+
 
 }
 

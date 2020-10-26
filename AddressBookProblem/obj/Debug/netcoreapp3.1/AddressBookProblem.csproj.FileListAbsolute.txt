@@ -11,5 +11,6 @@ C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netc
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.genruntimeconfig.cache
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.csprojAssemblyReference.cache
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\bin\Debug\netcoreapp3.1\CsvHelper.dll
-C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.csproj.CoreCompileInputs.cache
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.csproj.CopyComplete
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.csproj.CoreCompileInputs.cache
