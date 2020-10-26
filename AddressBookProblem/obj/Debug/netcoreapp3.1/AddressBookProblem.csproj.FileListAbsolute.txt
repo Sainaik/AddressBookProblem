@@ -6,8 +6,10 @@ C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\bin\Debug\netc
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\bin\Debug\netcoreapp3.1\AddressBookProblem.pdb
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.AssemblyInfoInputs.cache
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.AssemblyInfo.cs
-C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.csproj.CoreCompileInputs.cache
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.dll
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.pdb
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.genruntimeconfig.cache
 C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.csprojAssemblyReference.cache
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\bin\Debug\netcoreapp3.1\CsvHelper.dll
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.csproj.CoreCompileInputs.cache
+C:\Users\saiku\source\repos\AddressBookProblem\AddressBookProblem\obj\Debug\netcoreapp3.1\AddressBookProblem.csproj.CopyComplete

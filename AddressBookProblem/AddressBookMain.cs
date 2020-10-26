@@ -5,12 +5,19 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+
+using System.Linq;
+using CsvHelper;
+using System.Globalization;
+
+
 namespace AddressBookProblem
 {
+    [Serializable]
     class AddressBookMain
     {
-        static Dictionary<String, AddressBook> addressBookDictionary = new Dictionary<string, AddressBook>();
-        static List<AddressBook> addressBooksList = new List<AddressBook>();
+        public static Dictionary<String, AddressBook> addressBookDictionary = new Dictionary<string, AddressBook>();
+        public static List<AddressBook> addressBooksList = new List<AddressBook>();
 
 
         static void Main(string[] args)
@@ -23,6 +30,7 @@ namespace AddressBookProblem
             {
                 Console.WriteLine("\n1.Add AddressBook \n2.View AddressBooks");
                 Console.WriteLine("3.Searching Contact by City or State\n4.Add AdrdressBook to the IO File\n5.Read AdrdressBook from the IO File ");
+                Console.WriteLine("6.Add AdrdressBook to the CSV File\n 7.Read AdrdressBook from CSV file\n8.Exit ");
                 int choice1 = 0;
                 try
                 {
@@ -100,6 +108,7 @@ namespace AddressBookProblem
                                     loop2 = false;
                                     break;
                             }
+                            Console.WriteLine("______________________________________________________");
                         }
                         addressBookDictionary.Add(addressBookName, addressBook);
                         addressBooksList.Add(addressBook);
@@ -128,14 +137,27 @@ namespace AddressBookProblem
 
                         AddressBookMain.ReadAddressBookToFileIO();
                         break;
+                    case 6:
+                        Console.WriteLine("Adding AddressBook into CSV File");
+
+                        AddressBookMain.AddAddressBookToCsv();
+                        break;
+                    case 7:
+                        Console.WriteLine("Reading AddressBook CSV File");
+
+                        AddressBookMain.ReadAddressBookFromCsv();
+                        break;
+
 
                     default:
                         loop1 = false;
                         break;
 
 
-
                 }
+
+                Console.WriteLine("______________________________________________________");
+
             }
             Console.WriteLine("Thanks for Using the Application!!");
 
@@ -286,12 +308,53 @@ namespace AddressBookProblem
                     }
                 }
             }
+        }
 
+        public static void AddAddressBookToCsv()
+        {
+            string exportFilePath = @"C:\Users\saiku\source\repos\AddressBookProblem\Utility\ExportData.csv";
+            Console.WriteLine("Writing Data:");
+
+            var records = addressBooksList;
+
+            using (var writer = new StreamWriter(exportFilePath))
+            using (var csvExport = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csvExport.WriteRecords(records);
+            }
+            Console.WriteLine("Writed Data successfully:");
+        }
+
+
+        public static void ReadAddressBookFromCsv()
+        {
+            string importFilePath = @"C:\Users\saiku\source\repos\AddressBookProblem\Utility\Export.csv";
+
+            if (File.Exists(importFilePath))
+            {
+                using (var reader = new StreamReader(importFilePath))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    var records = csv.GetRecords<AddressBook>().ToList();
+                    Console.WriteLine("Reading Data ......\n");
+
+                    foreach (AddressBook addressbook in records)
+                    {
+                        addressbook.ViewAllContacts();
+                    }
+                    Console.WriteLine("Readed Data successFully");
+
+
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("File doesnot exit.. Add the file.");
+            }
 
         }
     }
 
-
-
-
 }
+

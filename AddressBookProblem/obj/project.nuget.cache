@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Xn+y0LVZM9YHiZpL3anohmRAKxKFPnaP8euyt5SzyZzm2CNpcdybXtwNAm3zqUmkn7uP9o2xrE0Yw5J906VF3w==",
+  "dgSpecHash": "ZgU7ATFcJpMOrub5Mf0cvkIZH75yQ16knOToV3lV+eAmfrbVfDj6qUTFON+v+pNUjk4FymsYLrr3Lzir/Gc4dQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\saiku\\source\\repos\\AddressBookProblem\\AddressBookProblem\\AddressBookProblem.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\saiku\\.nuget\\packages\\csvhelper\\15.0.8\\csvhelper.15.0.8.nupkg.sha512",
+    "C:\\Users\\saiku\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512"
+  ],
   "logs": []
 }

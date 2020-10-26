@@ -9,9 +9,9 @@ namespace AddressBookProblem
     [Serializable]
     public class AddressBook
     {
-        static ValidationContext context;
-        static List<ValidationResult> result = new List<ValidationResult>();
-        static bool isValid;
+        public static ValidationContext context;
+        public static List<ValidationResult> result = new List<ValidationResult>();
+        public static bool isValid;
 
         public List<Contact> contactsList;
 
@@ -57,7 +57,7 @@ namespace AddressBookProblem
 
         // to fetch Contact details
 
-        private Contact GetDetails()
+        public Contact GetDetails()
         {
             Contact contact = new Contact();
 
@@ -110,7 +110,7 @@ namespace AddressBookProblem
 
         }
 
-        private bool IsContactExist(string FirstName, string LastName)
+        public bool IsContactExist(string FirstName, string LastName)
         {
             bool isContactExist = false;
             foreach (Contact contact in this.contactsList)
