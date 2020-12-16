@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Text;
 namespace AddressBookProblem
 {
     [Serializable]
-    public class Contact
+    public class Contact 
     {/// <summary>
      /// Gets or sets the first name.
      /// </summary>

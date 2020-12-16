@@ -30,7 +30,8 @@ namespace AddressBookProblem
             {
                 Console.WriteLine("\n1.Add AddressBook \n2.View AddressBooks");
                 Console.WriteLine("3.Searching Contact by City or State\n4.Add AdrdressBook to the IO File\n5.Read AdrdressBook from the IO File ");
-                Console.WriteLine("6.Add AdrdressBook to the CSV File\n7.Read AdrdressBook from CSV file\n8.Add AdrdressBook to the Json File\n9.Read AdrdressBook from Json file\n0.Exit ");
+                Console.WriteLine("6.Add AdrdressBook to the CSV File\n7.Read AdrdressBook from CSV file\n8.Add AdrdressBook to the Json File\n9.Read AdrdressBook from Json file");
+                Console.WriteLine("10.Insert Addressbook in Database\n11.Retrieve Contacts by AddressBookName\n0.Exit ");
                 int choice1 = 0;
                 try
                 {
@@ -157,6 +158,17 @@ namespace AddressBookProblem
                         Console.WriteLine("Reading AddressBook from Json File");
 
                         AddressBookMain.ReadAddressBookFromJsonFile();
+                        break;
+
+                    case 10:
+                        Console.WriteLine("Insert Contact to AddressBook Database");
+
+                        AddressBookMain.insertAddressBooktoDB();
+                        break;
+                    case 11:
+                        Console.WriteLine("Retrieving Contacts by AddressBookName");
+
+                        AddressBookMain.RetrieveFromDB();
                         break;
 
 
@@ -301,7 +313,7 @@ namespace AddressBookProblem
                     BinaryFormatter binaryFormatter = new BinaryFormatter();
                     AddressBook addressBook = (AddressBook)binaryFormatter.Deserialize(fileStream);
                     Console.WriteLine("AddressBook contacts can be viewed");
-                    addressBook.ViewContact();
+                    addressBook.ViewAllContacts();
 
                     fileStream.Close();
                     isRead = true;
@@ -325,13 +337,14 @@ namespace AddressBookProblem
         {
             string exportFilePath = @"C:\Users\saiku\source\repos\AddressBookProblem\Utility\ExportData.csv";
             Console.WriteLine("Writing Data:");
+          
+            var records = new Contact("Sai","Naik", "Asdf", "Asdf", "Asdf", "123456", "+91 9987654321", "sai@gmail.com" ) ;
 
-            var records = addressBooksList;
 
             using (var writer = new StreamWriter(exportFilePath))
             using (var csvExport = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
-                csvExport.WriteRecords(records);
+                csvExport.WriteRecord(records);
             }
             Console.WriteLine("Writed Data successfully:");
         }
@@ -412,6 +425,41 @@ namespace AddressBookProblem
             {
                 Console.WriteLine("Json File doesnot exit.. Add the file.");
             }
+
+        }
+
+
+        public static void insertAddressBooktoDB()
+        {
+            Console.WriteLine("Enter the AddressBook Name");
+
+            string addressBookName = Console.ReadLine();
+
+            foreach ( KeyValuePair<String,AddressBook> KeyValue in addressBookDictionary )
+            {
+                if (KeyValue.Key.Equals(addressBookName))
+                {
+                    DatabaseOperations databaseOperations = new DatabaseOperations();
+                    databaseOperations.InsertDataInDatabase(KeyValue.Value, KeyValue.Key);
+
+                }
+                
+            }
+
+        }
+
+        public static void RetrieveFromDB()
+        {
+            Console.WriteLine("Enter the AddressBook Name");
+
+            string addressBookName = Console.ReadLine();
+
+            DatabaseOperations databaseOperations = new DatabaseOperations();
+
+            databaseOperations.retrieveContactData(addressBookName);
+
+
+
 
         }
     }

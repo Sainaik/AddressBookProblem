@@ -7,7 +7,7 @@ using System.Reflection;
 namespace AddressBookProblem
 {
     [Serializable]
-    public class AddressBook
+    public class AddressBook 
     {
         public static ValidationContext context;
         public static List<ValidationResult> result = new List<ValidationResult>();
@@ -322,6 +322,9 @@ namespace AddressBookProblem
         {
             this.contactsList = this.contactsList.OrderBy(o => o.Zip).ToList();
         }
+
+
+        
 
     }
 }
